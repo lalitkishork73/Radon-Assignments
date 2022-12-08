@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "name": "login-assingment",
+  "description": "This is the collection of multiple assignments based on MERN Stack.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client":"cd client && npm start",
+    "server":"cd server && npm start ",
+    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "inserver":"cd server && npm i",
+    "inclient":"cd client && npm i",
+    "depi":"concurrently \"npm run inserver\" \"npm run inclient\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lalitkishork73/Radon-Assignments.git"
+  },
+  "author": "lalitkishor k",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lalitkishork73/Radon-Assignments/issues"
+  },
+  "homepage": "https://github.com/lalitkishork73/Radon-Assignments#readme"
+}
