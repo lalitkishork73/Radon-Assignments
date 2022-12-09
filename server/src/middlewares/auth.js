@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const profile = require('../models/profile');
+const { isValidObjectId } = require('../helpers/utils')
 
 
 const authentication = (req, res, next) => {
@@ -36,4 +38,30 @@ const authentication = (req, res, next) => {
     }
 }
 
-module.exports = { authentication };
+const authorization = async (req, res, next) => {
+    try {
+        const tokenId = req.userId;
+        const userId = req.params.Id || req.query.Id;
+
+        if (!isValidObjectId(userId)) {
+            return res.status(400).send({ status: false, message: `invalid userIID ${userId} ` });
+        }
+        const checkUser = await profile.findOne({ _id: userId });
+        if (!checkUser) {
+            return res.status(404).send({ status: false, message: "user not found" })
+        }
+        const UserId = checkUser._id.toString();
+
+        if (tokenId === UserId) {
+            next();
+        }
+        return res.status(403).send({ status: false, message: `this User ${userId} is unauthrised` })
+
+    }
+    catch (err) {
+        return res.status(500).send({ status: false, message: err.message });
+    }
+}
+
+
+module.exports = { authentication, authorization };
