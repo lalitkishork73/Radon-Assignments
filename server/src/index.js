@@ -4,13 +4,16 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 require('./database/mongoConnect');
 const route = require('./routes/route');
+const { uploadFiles}= require('./helpers/googleDrivestor');
 
 const app = express();
 const port = process.env.PORT || 3001;
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer().any());
+require('./helpers/googleDrivestor');
 app.use('/', route);
 app.use('*', (req, res) => res.status(404).send({ status: false, message: "please enter valid URL" }))
 

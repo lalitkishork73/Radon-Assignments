@@ -1,13 +1,14 @@
 const profile = require('../models/profile');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { uploadFile } = require('../helpers/awsConnect');
+const validUrl = require("valid-url");
+const { uploadfile } = require('../helpers/awsConnect');
 const { isValidRequestBody, isValidObjectId, isValid, isvalidEmail, isValidPassword, isValidPhone } = require('../helpers/utils');
 
 const createUser = async function (req, res) {
     try {
         let data = req.body;
-        let files = req.files;
+        //let files = req.files;
 
         if (!isValidRequestBody(data)) {
             return res.status(400).send({ status: false, message: "Please provide user Details" });
@@ -80,15 +81,30 @@ const createUser = async function (req, res) {
             }
         }
 
+        // if You have AWs then upload your files using commneted code 
+
         /*  if (files) {
              if (files && files.length > 0) {
-                 let url = await uploadFile(files[0]);
+                creatdata["photo"] = await uploadfile(files[0]);
              } else {
                  return res
                  .status(400)
                  .send({ status: false, message: "Please Provide ProfileImage" });
              }
-         } */
+         }  */
+
+        // incase if you don't have AWS then provide online image URL link's string
+
+        if (!isValid(photo))
+            return res.status(400).send({ status: false, message: "please give webimage location" });
+        if (photo) {
+            if (!validUrl.isWebUri(photo))
+                return res.status(400).send({
+                    status: false,
+                    message: "Provide valid image url string in request!",
+                });
+        }
+
         creatdata["photo"] = photo;
 
         let createdData = await profile.create(creatdata);
