@@ -41,6 +41,7 @@ build/Release
 client/node_modules
 server/node_modules
 node_modules/
+server/src/helpers/googlekey.json
 jspm_packages/
 
 # TypeScript v1 declaration files

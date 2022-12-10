@@ -1,5 +1,9 @@
 'use-strict';
 const fs= require('fs');
+const stream= require('stream');
+const path=require('path');
+const dirpath=path.join(__dirname, '/helpers');
+fs.openSync(dirpath, 'myimg.jpg');
 const readline= require('readline');
 const {google}= require('googleapis');
 const GOOGLE_API_FOLDER_ID='1gBDeJ6ggp0Y95IAQUmgwaONrnP7FFz_U'; 
@@ -25,7 +29,7 @@ const uploadFiles=async()=>{
 
         const media={
             mimeType:'image/jpg',
-            body:fs.createReadStream('../myimg.jpg')
+            body:fs.createReadStream('/helpers/myimg.jpg')
         }
 
         const response=await driveService.files.create({
