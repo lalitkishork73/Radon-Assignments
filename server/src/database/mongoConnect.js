@@ -2,10 +2,11 @@
 
 // Database configuration
 
+const url = process.env.MONGOLAB_URI;
+
 const mongoose = require('mongoose');
+mongoose.set('strictQuery', false);
 
-mongoose.connect("mongodb+srv://lalitkishork73:UzPr9bb6Wvxda9eC@cluster0.o2wavxe.mongodb.net/AssingmentDB?retryWrites=true&w=majority",
-    {
-        useNewUrlParser: true,
-    }).then(() => console.log("MongoDB Database Connected")).catch((err) => console.log(err));
-
+mongoose.connect(url, {
+    useNewUrlParser: true,
+}).then(() => console.log("MongoDB Database Connected")).catch((err) => console.log(err));

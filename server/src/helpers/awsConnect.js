@@ -2,8 +2,8 @@ const aws = require('aws-sdk');
 
 // First step Configuration in simple words login with AWS
 aws.config.update({
-    accessKeyId: "AKIAR7VN4HY7UGJZDEE2",
-    secretAccessKey: "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",
+    accessKeyId: process.env.AWS_ID,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
   });
 
 

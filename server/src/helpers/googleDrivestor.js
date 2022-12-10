@@ -1,51 +1,49 @@
 'use-strict';
-const fs= require('fs');
-const stream= require('stream');
-const path=require('path');
-const dirpath=path.join(__dirname, '/helpers');
-fs.openSync(dirpath, 'myimg.jpg');
-const readline= require('readline');
-const {google}= require('googleapis');
-const GOOGLE_API_FOLDER_ID='1gBDeJ6ggp0Y95IAQUmgwaONrnP7FFz_U'; 
- 
-console.log('Uploading files');
-const uploadFiles=async()=>{
-    try{
 
-        const auth=new google.auth.GoogleAuth({
-            keyFile: '../googlekey.json',
-            scopes:['https://www.googleapis.com/auth/drive']
+const stream = require('stream');
+const { google } = require('googleapis');
+const path = require('path');
+const GOOGLE_API_FOLDER_ID = process.env.GOOGLE_API_FOLDER_ID;
+const KeyFilePath = path.join(__dirname, 'googlekey.json');
+
+const uploadFiles = async (file) => {
+    try {
+        const bufferStream = new stream.PassThrough();
+        bufferStream.end(file.buffer);
+
+
+        const auth = new google.auth.GoogleAuth({
+            keyFile: KeyFilePath,
+            scopes: ['https://www.googleapis.com/auth/drive']
         });
 
-        const driveService=google.drive({
+        const driveService = google.drive({
             version: 'v3',
             auth
         });
-        
-        const fileMetaData={
-            'name':'myimg.jpg',
-            'parents':[GOOGLE_API_FOLDER_ID]
+
+        const fileMetaData = {
+            'name': file.originalname,
+            'parents': [GOOGLE_API_FOLDER_ID]
         }
 
-        const media={
-            mimeType:'image/jpg',
-            body:fs.createReadStream('/helpers/myimg.jpg')
+        const media = {
+            mimeType: file.mimeType,
+            body: bufferStream
         }
 
-        const response=await driveService.files.create({
-            resource:fileMetaData,
-            media:media,
-            fields:'id'
+        const response = await driveService.files.create({
+            resource: fileMetaData,
+            media: media,
+            fields: 'id,name'
         });
 
         return response.data.id
- 
+
     }
-    catch(err){
+    catch (err) {
         console.log(err.message);
     }
 }
 
-uploadFiles().then((data)=>{
-    console.log(data);
-})
+module.exports = { uploadFiles };
