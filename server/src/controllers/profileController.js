@@ -1,3 +1,4 @@
+'use strict';
 const profile = require('../models/profile');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');

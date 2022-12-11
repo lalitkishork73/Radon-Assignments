@@ -1,3 +1,4 @@
+'use strict';
 const aws = require('aws-sdk');
 
 // First step Configuration in simple words login with AWS

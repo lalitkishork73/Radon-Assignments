@@ -1,3 +1,4 @@
+'use strict';
 const jwt = require('jsonwebtoken');
 const profile = require('../models/profile');
 const { isValidObjectId } = require('../helpers/utils')

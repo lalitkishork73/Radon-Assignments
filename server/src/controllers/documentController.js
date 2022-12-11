@@ -1,3 +1,4 @@
+'use strict';
 const document = require('../models/document');
 const profile = require('../models/profile');
 const { uploadfile } = require('../helpers/awsConnect');
