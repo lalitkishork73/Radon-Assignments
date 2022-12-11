@@ -4,12 +4,13 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const validUrl = require("valid-url");
 const { uploadfile } = require('../helpers/awsConnect');
+const { uploadFiles } = require('../helpers/googleDrivestor');
 const { isValidRequestBody, isValidObjectId, isValid, isvalidEmail, isValidPassword, isValidPhone } = require('../helpers/utils');
 
 const createUser = async function (req, res) {
     try {
         let data = req.body;
-        //let files = req.files;
+        let files = req.files;
 
         if (!isValidRequestBody(data)) {
             return res.status(400).send({ status: false, message: "Please provide user Details" });
@@ -94,19 +95,20 @@ const createUser = async function (req, res) {
              }
          }  */
 
-        // incase if you don't have AWS then provide online image URL link's string
+        // Upload Image on Google Drive using Google Apis
+        let imgcode;
 
-        if (!isValid(photo))
-            return res.status(400).send({ status: false, message: "please give webimage location" });
-        if (photo) {
-            if (!validUrl.isWebUri(photo))
-                return res.status(400).send({
-                    status: false,
-                    message: "Provide valid image url string in request!",
-                });
+        if (files && files.length > 0) {
+            res = await uploadFiles(files[0]);
         }
+        else
+            return res
+                .status(400)
+                .send({ status: false, message: "Please Provide ProfileImage" });
 
-        creatdata["photo"] = photo;
+
+        let imgUrl="https://drive.google.com/uc?export=view&id="+imgcode;        
+        creatdata["photo"] = imgUrl;
 
         let createdData = await profile.create(creatdata);
         if (!createdData) {

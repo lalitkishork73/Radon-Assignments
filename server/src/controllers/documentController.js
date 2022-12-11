@@ -11,7 +11,12 @@ const createDocument = async (req, res) => {
 
         let files = req.files;
 
-        let createDocument = {};
+        console.log(fileName);
+        let createDocument = {
+            filename: files[0].originalname,
+            filetype: files[0].mimetype
+        };
+
 
         //using AWS S3 bucket
 
@@ -27,24 +32,23 @@ const createDocument = async (req, res) => {
 
         // Using Google Drive storage 
 
+        let fileResponse;
         if (files && files.length > 0) {
-            createDocument["file"] = await uploadFiles(files[0]);
+            fileResponse = await uploadFiles(files[0]);
         }
         else
             return res
                 .status(400)
-                .send({ status: false, message: "Please Provide ProfileImage" });
+                .send({ status: false, message: "Please Provide Document" });
 
+        let DocUrl = "https://drive.google.com/uc?export=view&id=" + fileResponse;
+        createDocument["file"] = DocUrl;
 
         const uploadedData = await document.create(createDocument);
 
         if (!uploadedData)
             return res.status(400).send({ status: false, message: "not able to uplaod document" });
 
-        /*  const createdDocument = await document.create(files);
-         if (!createdDocument) {
-             return res.status(400).send({ status: false, message: 'not able to create document' })
-         } */
 
         return res.status(201).send({ status: true, message: 'document created', data: uploadedData });
 
