@@ -13,6 +13,8 @@ const createDocument = async (req, res) => {
 
         let createDocument = {};
 
+        //using AWS S3 bucket
+
         /*  if (files) {
                    if (files && files.length > 0) {
                       creatdata["photo"] = await uploadfile(files[0]);
@@ -23,17 +25,27 @@ const createDocument = async (req, res) => {
                    }
                }  */
 
-        createDocument["file"] = await uploadFiles(files[0]);
+        // Using Google Drive storage 
+
+        if (files && files.length > 0) {
+            createDocument["file"] = await uploadFiles(files[0]);
+        }
+        else
+            return res
+                .status(400)
+                .send({ status: false, message: "Please Provide ProfileImage" });
+
 
         const uploadedData = await document.create(createDocument);
 
         if (!uploadedData)
             return res.status(400).send({ status: false, message: "not able to uplaod document" });
 
-        // const createdDocument = await document.create(files);
-        // if (!createdDocument) {
-        //     return res.status(400).send({ status: false, message: 'not able to create document' })
-        // }
+        /*  const createdDocument = await document.create(files);
+         if (!createdDocument) {
+             return res.status(400).send({ status: false, message: 'not able to create document' })
+         } */
+
         return res.status(201).send({ status: true, message: 'document created', data: uploadedData });
 
     }
