@@ -15,7 +15,7 @@ const createUser = async function (req, res) {
         if (!isValidRequestBody(data)) {
             return res.status(400).send({ status: false, message: "Please provide user Details" });
         }
-        let { name, password, email, phone, photo } = data;
+        let { name, password, email, phone } = data;
         let creatdata = {}
 
         if (!isValid(name)) {
@@ -99,7 +99,7 @@ const createUser = async function (req, res) {
         let imgcode;
 
         if (files && files.length > 0) {
-            res = await uploadFiles(files[0]);
+            imgcode = await uploadFiles(files[0]);
         }
         else
             return res
@@ -107,7 +107,7 @@ const createUser = async function (req, res) {
                 .send({ status: false, message: "Please Provide ProfileImage" });
 
 
-        let imgUrl="https://drive.google.com/uc?export=view&id="+imgcode;        
+        let imgUrl = "https://drive.google.com/uc?export=view&id=" + imgcode;
         creatdata["photo"] = imgUrl;
 
         let createdData = await profile.create(creatdata);

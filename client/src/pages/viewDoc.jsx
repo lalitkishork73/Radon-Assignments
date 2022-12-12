@@ -31,7 +31,7 @@ const ViewDoc = () => {
                             
                         </div>
                         <div class="box row-start-1 row-end-5 col-start-2 col-end-6 rounded-lg border-black">
-                            <iframe src="https://drive.google.com/uc?export=view&id=14iIau19OfyxjqVVFlSioNW-YmbybRjSu" className='w-[100%] h-[100%] rounded-lg'></iframe>
+                            <iframe src="https://drive.google.com/uc?export=view&id=1XoLahvYI99_dKPYZgbI3j305heHgpRfo" className='w-[100%] h-[100%] rounded-lg'></iframe>
                         </div>
                     </div>
                 </div>

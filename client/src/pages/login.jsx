@@ -12,7 +12,7 @@ const Login = () => {
     password: password
   }
 
-  const url = 'localhost:3001/login'
+  const url = 'http://localhost:3001/login'
 
   const setData = async () => {
     try {
@@ -26,7 +26,7 @@ const Login = () => {
 
   const login = (e) => {
     e.preventDefault();
-    // setData();
+    setData();
     console.log(data);
   }
 

@@ -6,7 +6,7 @@ const profileSchema = new mongoose.Schema({
     password: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true, lowercase: true, unique: true },
     phone: { type: Number, required: true, trim: true, lowercase: true, unique: true },
-    photo: { type: String, required: true, trim: true, lowercase: true },
+    photo: { type: String, required: true, trim: true },
     deletedAt: { type: Date, default: null },
     isDeleted: { type: Boolean, default: false },
 }, { timestamps: true });
