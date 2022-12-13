@@ -7,6 +7,8 @@ import ViewDoc from "./pages/viewDoc";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Uploaddoc from "./pages/uploaddoc";
+import UploadD from "./components/uploadD";
+import Editlist from "./components/editlist";
 
 function App() {
   return (
@@ -20,10 +22,22 @@ function App() {
       <Navabar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/documents" element={<ViewDoc />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/editdocument" element={<Uploaddoc />} />
+        <Route path="documents" element={<ViewDoc />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="editdocument" element={<Uploaddoc />}>
+          <div className='h-screen w-screen'>
+            <div className="bg-black w-screen h-12"></div>
+            <div className="p-4 h-[90%]">
+              <div className='grid overflow-hidden grid-cols-5 grid-rows-4 gap-3 h-[100%]'>
+                <Editlist />
+              </div>
+            </div>
+          </div>
+          <Route path="uploadfile" element={<UploadD />} />
+          <Route path="viewdoc" element={<ViewDoc />} />
+          <Route path="editdoc" element={<UploadD />} />
+        </Route>
       </Routes>
     </>
   );

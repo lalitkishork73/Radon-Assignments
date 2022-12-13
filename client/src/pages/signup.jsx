@@ -65,7 +65,7 @@ const Signup = () => {
                 <input type="file" name="file" className='text-white block w-full text-sm rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-cyan-400' onChange={imgprev} ></input>
               </form>
               <div className='p-5'>
-                <img src={preview} width="250" height="250" alt='Set Profile Image' className='text-center text-white rounded-full bg-cover border-2 border-cyan-300' />
+                <img src={preview} width="250" height="250" alt='Set Profile Image' className='text-center text-white rounded-full bg-cover' />
               </div>
             </div>
             <div className='flex justify-center p-3'>

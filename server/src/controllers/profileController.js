@@ -164,7 +164,7 @@ const loginUser = async function (req, res) {
                 let token = jwt.sign({
                     userId: user._id.toString(),
                     Project: "it is assingment"
-                }, "password", { expiresIn: "10m" });
+                }, process.env.SECRET_KEY, { expiresIn: "10m" });
 
                 res.setHeader("Authorization", "Bearer " + token);
 

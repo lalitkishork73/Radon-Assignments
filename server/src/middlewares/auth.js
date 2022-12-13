@@ -20,7 +20,7 @@ const authentication = (req, res, next) => {
             return res.status(404).send({ status: false, message: "Invalid Token" });
         }
         let decodedToken;
-        jwt.verify(token, "password", (err, decode) => {
+        jwt.verify(token, process.env.SECRET_KEY, (err, decode) => {
             if (err) {
                 return res
                     .status(401)
