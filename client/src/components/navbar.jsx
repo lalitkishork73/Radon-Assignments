@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
+
 const Navbar = () => {
     return (
         <>
@@ -8,7 +9,7 @@ const Navbar = () => {
                 <div className='ml-5'>
                     <Link to='/'><h1 className='font-signature font-bold text-xl'><span className='text-cyan-400'>Docum</span>&nbsp; Publisher</h1></Link>
                 </div>
-                <ul className='flex gap-5    mr-5'>
+                <ul className='flex gap-5 mr-5'>
                     <NavLink to='/'><li className='hover:text-cyan-300 cursor-pointer p-1 font-bold'>Home</li></NavLink>
                     <NavLink to='/editdocument'><li className='hover:text-cyan-300 cursor-pointer p-1 font-bold'>Upload Documents</li></NavLink>
                     <NavLink to='/login'><li className='hover:text-cyan-300 cursor-pointer border-2 p-1 pl-4 pr-4 hover:border-cyan-300 font-bold'>Login</li></NavLink>

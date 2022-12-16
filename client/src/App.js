@@ -9,6 +9,7 @@ import Signup from "./pages/signup";
 import Uploaddoc from "./pages/uploaddoc";
 import UploadD from "./components/uploadD";
 import Editlist from "./components/editlist";
+import Protected from "./components/protected";
 
 function App() {
   return (
@@ -25,7 +26,11 @@ function App() {
         <Route path="documents" element={<ViewDoc />} />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
-        <Route path="editdocument" element={<Uploaddoc />}>
+        <Route path="editdocument"
+          element={
+
+            <Uploaddoc />
+          }>
           <Route index="true" path="uploadfile" element={<UploadD />} />
           <Route path="viewdoc" element={<ViewDoc />} />
           <Route path="editdoc" element={<UploadD />} />

@@ -10,8 +10,7 @@ const createDocument = async (req, res) => {
         // let files=req.files;
 
         let files = req.files;
-
-        console.log(fileName);
+        
         let createDocument = {
             filename: files[0].originalname,
             filetype: files[0].mimetype

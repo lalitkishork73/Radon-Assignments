@@ -2,10 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   let data = {
     email: email,
@@ -18,6 +20,9 @@ const Login = () => {
     try {
       const res = await axios.post(url, data);
       console.log(res.data);
+      sessionStorage.setItem('token', res.data.token.toString());
+      navigate('/editdocument');
+
     }
     catch (err) {
       console.log(err)
@@ -27,6 +32,7 @@ const Login = () => {
   const login = (e) => {
     e.preventDefault();
     setData();
+
     console.log(data);
   }
 
