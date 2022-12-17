@@ -1,12 +1,14 @@
 import React from 'react'
 import img from '../assets/im.jpg';
 import { NavLink } from 'react-router-dom';
+import Navabar from '../components/navbar';
 
 
 function Home() {
     return (
         <>
 
+            <Navabar />
             <div className='h-[100%] w-[100%] flex justify-center items-center'>
                 <div className='relative bg-black'>
                     <img src={img} className='h-screen w-screen' />

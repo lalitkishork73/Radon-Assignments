@@ -4,10 +4,12 @@ import UploadD from '../components/uploadD'
 import bgimg from '../assets/bgTree.jpg'
 import Editlist from '../components/editlist'
 import { Outlet } from 'react-router-dom'
+import AuthConsumer from '../hooks/auth'
 
 const Uploaddoc = () => {
     const [upload, setUpload] = useState(false);
-
+    const auth = AuthConsumer();
+    console.log(auth);
 
 
     return (

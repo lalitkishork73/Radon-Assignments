@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, Outlet } from 'react-router-dom'
 
 
 const Navbar = () => {
@@ -16,6 +16,8 @@ const Navbar = () => {
                     <NavLink to='/signup'><li className='hover:text-cyan-300 cursor-pointer border-2 p-1 pl-4 pr-4 hover:border-cyan-300 font-bold'>signup</li></NavLink>
                 </ul>
             </nav>
+
+            <Outlet />
         </>
     )
 }
