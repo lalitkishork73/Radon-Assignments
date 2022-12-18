@@ -4,6 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import Avatar from 'react-avatar-edit';
 import axios from 'axios';
 
+
+const d1=`h-screen w-screen bg-[url(https://img.freepik.com/free-vector/gradient-abstract-background-design_23-2149066048.jpg?w=1380&t=st=1670789245~exp=1670789845~hmac=bc8f950b9599458127c92d1292fc5b9b1500428c917255b2552939426d950d11)] bg-cover`;
+const navStrip=`bg-black h-12`;
+const input=`p-1 rounded-md bg-transparent border-b-2 text-white`;
+
+
 const Signup = () => {
   const navigate = useNavigate()
   const [user, setUser] = useState('');
@@ -52,16 +58,16 @@ const Signup = () => {
 
   return (
     <>
-      <div className='h-screen w-screen bg-[url(https://img.freepik.com/free-vector/gradient-abstract-background-design_23-2149066048.jpg?w=1380&t=st=1670789245~exp=1670789845~hmac=bc8f950b9599458127c92d1292fc5b9b1500428c917255b2552939426d950d11)] bg-cover'>
-        <div className="bg-black h-12"></div>
+      <div className={d1}>
+        <div className={navStrip}></div>
         <div className='flex justify-center items-center h-[70%]'>
           <div className='rounded-lg bg-black/70 flex flex-col'>
             <div className='flex flex-col sm:flex-row'>
               <form action="" className='flex flex-col gap-5 p-5'>
-                <input type="text" placeholder='Username' className='p-1 rounded-md bg-transparent border-b-2 text-white' value={user} onChange={(e) => { setUser(e.target.value) }} />
-                <input type="email" placeholder='Email' className='p-1 rounded-md bg-transparent border-b-2 text-white' value={email} onChange={(e) => { setEmail(e.target.value) }} />
-                <input type="phone" placeholder='Phone' className='p-1 rounded-md bg-transparent border-b-2 text-white' value={phone} onChange={(e) => { setPhone(e.target.value) }} />
-                <input type="Password" placeholder='Password' className='p-1 rounded-md bg-transparent border-b-2 text-white' value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                <input type="text" placeholder='Username' className={input} value={user} onChange={(e) => { setUser(e.target.value) }} />
+                <input type="email" placeholder='Email' className={input} value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                <input type="phone" placeholder='Phone' className={input} value={phone} onChange={(e) => { setPhone(e.target.value) }} />
+                <input type="Password" placeholder='Password' className={input} value={password} onChange={(e) => { setPassword(e.target.value) }} />
                 <input type="file" name="file" className='text-white block w-full text-sm rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-cyan-400' onChange={imgprev} ></input>
               </form>
               <div className='p-5 '>
