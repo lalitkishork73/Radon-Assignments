@@ -4,24 +4,25 @@ import { useNavigate } from 'react-router-dom';
 import Avatar from 'react-avatar-edit';
 import { FcCheckmark } from 'react-icons/fc'
 import { AiFillInfoCircle } from 'react-icons/ai'
-import axios from 'axios';
+import axios from '../api/axios';
 
-
+const REGISTER_URL = `/signup`;
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
 const PHONE_REGEX = /^(?:(?:\+|0{0,2})91(\s*|[\-])?|[0]?)?([6789]\d{2}([-]?)\d{3}([-]?)\d{4})$/;
+const FILE_REGEX = /\.(jpg|jpeg|png|gif)$/;
 
 const d1 = `h-screen w-screen bg-[url(https://img.freepik.com/free-vector/gradient-abstract-background-design_23-2149066048.jpg?w=1380&t=st=1670789245~exp=1670789845~hmac=bc8f950b9599458127c92d1292fc5b9b1500428c917255b2552939426d950d11)] bg-cover`;
 const navStrip = `bg-black h-12`;
 const input = `p-1 rounded-md bg-transparent border-b-2 text-white`;
-const inputT = `text-red-500 text-sm p-1 bg-black rounded-md `
+const inputT = `text-red-500 text-sm p-1 bg-black rounded-xl `
 const inputF = `absolute left-[-9999px]`
 
 
 const Signup = () => {
   //definde userRef and errRef
-  const userRef = useRef();
+  const userRef = useRef(0);
   const phoneRef = useRef();
   const emailRef = useRef();
   const errRef = useRef();
@@ -53,6 +54,8 @@ const Signup = () => {
 
   const [file, setFile] = useState();
 
+  const [post, setPost] = useState(null);
+
 
   const [preview, setPreview] = useState(null);
 
@@ -83,24 +86,32 @@ const Signup = () => {
     setErrMsg('');
   }, [user, password, matchPwd, email, phone, file])
 
-
-
-  const url = 'http://localhost:3001/signup'
-
   const setData = async (formData) => {
     try {
 
-      let res = axios.post(url, formData);
-
+      let res = await axios.post(REGISTER_URL, formData);
       console.log(res?.data);
 
-      setSuccess(true);
+      setPost(res);
 
-      setUser('');
-      setPassword('');
-      setPhone('');
-      setEmail('');
-      setFile();
+
+      if (res.data === undefined) {
+        console.log('res Data error');
+      }
+
+      if (res.data.status === true) {
+        setSuccess(true);
+        setUser('');
+        setPassword('');
+        setPhone('');
+        setEmail('');
+        setFile();
+        console.log("done");
+      }
+      console.log(res.data, "got false");
+
+
+
     }
     catch (err) {
       console.log(err);
@@ -150,25 +161,24 @@ const Signup = () => {
       <div className={d1}>
         <div className={navStrip}></div>
         <div className='flex justify-center items-center h-[70%]'>
-          {success ? <section className=''>
-            <h1>SuccessFully Created Account</h1>
-            <p><Link to='/login'> please Login now</Link></p>
+          {success ? <section className='rounded-lg bg-black/70 flex flex-col p-5 text-white'>
+            <h1 className='text-2xl'>SuccessFully Created Account</h1>
+            <p className='text-green-500'><Link to='/login'> please Login now</Link></p>
           </section> :
             < section className='rounded-lg bg-black/70 flex flex-col'>
               <div className='flex flex-col sm:flex-row'>
                 <form action="" className='flex flex-col gap-3 p-5'>
-
                   <input type="text" placeholder='Username' className={input} value={user}
                     ref={userRef}
                     autoComplete="off"
                     required
+                    focused="true"
                     id='username'
                     aria-invalid={validName ? "false" : "true"}
                     aria-describedby="uidnote"
                     onFocus={() => { setUserFocus(true) }}
                     onBlur={() => { setUserFocus(false) }}
                     onChange={(e) => { setUser(e.target.value) }} />
-
                   <FcCheckmark className={validName ? "relative" : "absolute invisible"} />
 
                   <p id="uidnote" className={userFocus && user && !validName ? inputT : inputF}>
@@ -184,12 +194,9 @@ const Signup = () => {
                     onFocus={() => { setEmailFocus(true) }}
                     onBlur={() => { setEmailFocus(false) }}
                   />
-
                   <p id="emailnote" className={emailFocus && email && !validEmail ? inputT : inputF}>
                     Email must be valid example1@email.com
                   </p>
-
-
                   <input type="phone" placeholder='Phone' className={input} value={phone} onChange={(e) => { setPhone(e.target.value) }}
                     ref={phoneRef}
                     autoComplete="off"
@@ -233,11 +240,10 @@ const Signup = () => {
                     onBlur={() => setMatchFocus(false)}
                   />
                   <p id="confirmnote" className={matchFocus && !validMatch ? inputT : inputF}>
-
                     Must match the first password input field.
                   </p>
 
-                  <input type="file" name="file" className='text-white block w-full text-sm rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-cyan-400' onChange={imgprev} ></input>
+                  <input type="file" name="file" className='text-white block w-full text-sm rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-cyan-400' onChange={imgprev} />
                 </form>
                 <div className='p-5 '>
                   <img src={preview} width="250" height="250" alt='Set Profile Image' className='text-center text-white rounded-full bg-cover' />
@@ -245,9 +251,7 @@ const Signup = () => {
               </div>
               <div className='flex justify-center p-3'>
                 <button className='p-1 pl-5 pr-5 bg-red-500 rounded-md text-white hover:bg-green-400' onClick={signup}
-
                 >SignUp</button>
-
               </div>
               <p className='text-white text-center p-5'>If you have already an account?<Link to='/login'>&nbsp;<span className='text-cyan-400'>Login</span></Link></p>
             </section>
