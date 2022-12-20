@@ -174,8 +174,6 @@ const Signup = () => {
                     required
                     focused="true"
                     id='username'
-                    aria-invalid={validName ? "false" : "true"}
-                    aria-describedby="uidnote"
                     onFocus={() => { setUserFocus(true) }}
                     onBlur={() => { setUserFocus(false) }}
                     onChange={(e) => { setUser(e.target.value) }} />
