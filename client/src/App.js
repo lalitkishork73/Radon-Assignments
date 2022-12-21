@@ -10,6 +10,7 @@ import Uploaddoc from "./pages/uploaddoc";
 import UploadD from "./components/uploadD";
 import Editlist from "./components/editlist";
 import Protected from "./components/protected";
+import RequireAuth from "./components/requireAuth";
 
 function App() {
   const routes = useRoutes([
@@ -34,21 +35,27 @@ function App() {
           element: <Signup />
         },
         {
-          path: "editdocument",
-          element: <Uploaddoc />,
+          element: <RequireAuth />,
           children: [
             {
-              index: true,
-              element: <UploadD />
-            }, {
-              path: "viewdoc",
-              element: <ViewDoc />
-            }, {
-              path: "editdoc",
-              element: <UploadD />
+              path: "editdocument",
+              element: <Uploaddoc />,
+              children: [
+                {
+                  index: true,
+                  element: <UploadD />
+                }, {
+                  path: "viewdoc",
+                  element: <ViewDoc />
+                }, {
+                  path: "editdoc",
+                  element: <UploadD />
+                },
+              ]
             },
           ]
         },
+
 
       ]
     },
