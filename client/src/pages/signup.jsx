@@ -5,7 +5,7 @@ import Avatar from 'react-avatar-edit';
 import { FcCheckmark } from 'react-icons/fc'
 import { AiFillInfoCircle } from 'react-icons/ai'
 import axios from '../api/axios';
-
+import {auth} from '../hooks/auth'
 const REGISTER_URL = `/signup`;
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;

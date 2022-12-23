@@ -7,9 +7,9 @@ const UploadD = () => {
                 <div className='bg-white text-cyan-400 p-5 rounded-md flex flex-col'>
                     <h1 className='mt-5 mb-5 font-bold text-4xl'>Upload Your Documents</h1>
                     <div className="flex items-center justify-center w-full">
-                        <label class="block">
-                            <span class="sr-only">Choose profile photo</span>
-                            <input type="file" class="block w-full text-sm text-slate-500
+                        <label className="block">
+                            <span className="sr-only">Choose profile photo</span>
+                            <input type="file" className="block w-full text-sm text-slate-500
                                                         file:mr-4 file:py-2 file:px-4
                                                         file:rounded-full file:border-0
                                                         file:text-sm file:font-semibold

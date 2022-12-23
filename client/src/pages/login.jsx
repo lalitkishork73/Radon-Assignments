@@ -19,6 +19,9 @@ const Login = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
+  console.log(location);
+  console.log(location.pathname)
+
   const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
@@ -59,7 +62,8 @@ const Login = () => {
 
       setAuth({ email, password, accessToken })
       navigate(from, { replace: true });
-      // setAuth({ email, password, roles, accessToken });
+      console.log(from)
+       setAuth({ email, password, roles, accessToken });
       // const roles = response?.data?.roles;
       // setUser('');
       // setPwd('');
