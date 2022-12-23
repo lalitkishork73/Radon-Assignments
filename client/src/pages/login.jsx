@@ -63,7 +63,7 @@ const Login = () => {
       setAuth({ email, password, accessToken })
       navigate(from, { replace: true });
       console.log(from)
-       setAuth({ email, password, roles, accessToken });
+      //  setAuth({ email, password, roles, accessToken });
       // const roles = response?.data?.roles;
       // setUser('');
       // setPwd('');
