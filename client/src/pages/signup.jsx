@@ -1,8 +1,8 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Forminput from '../components/forminput';
-/* import { useNavigate } from 'react-router-dom';
-import Avatar from 'react-avatar-edit';
+import { useNavigate } from 'react-router-dom';
+
 import { FcCheckmark } from 'react-icons/fc'
 import { AiFillInfoCircle } from 'react-icons/ai'
 import axios from '../api/axios';
@@ -13,7 +13,9 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
 const PHONE_REGEX = /^(?:(?:\+|0{0,2})91(\s*|[\-])?|[0]?)?([6789]\d{2}([-]?)\d{3}([-]?)\d{4})$/;
 const FILE_REGEX = /\.(jpg|jpeg|png|gif)$/;
-*/
+const input = `p-1 rounded-md bg-transparent border-b-2 text-white`;
+const inputT = `text-red-500 text-sm p-1 bg-black rounded-xl `
+const inputF = `absolute left-[-9999px]`
 const d1 = `h-screen w-screen bg-[url(https://img.freepik.com/free-vector/gradient-abstract-background-design_23-2149066048.jpg?w=1380&t=st=1670789245~exp=1670789845~hmac=bc8f950b9599458127c92d1292fc5b9b1500428c917255b2552939426d950d11)] bg-cover`;
 const navStrip = `bg-black h-12`;
 
@@ -22,13 +24,12 @@ const navStrip = `bg-black h-12`;
 
 const Signup = () => {
   //definde userRef and errRef
-  /* const userRef = useRef(0);
+  const userRef = useRef(0);
 
   const phoneRef = useRef();
   const emailRef = useRef();
   const errRef = useRef();
 
-  const navigate = useNavigate();
 
   const [user, setUser] = useState('');
   const [validName, setValidName] = useState(false);
@@ -258,114 +259,9 @@ const Signup = () => {
         </div>
       </div>
     </>
-  ) */
-
-  const btn = "p-1 pl-5 pr-5 bg-red-500 rounded-md text-white hover:bg-green-400 "
-
-  const [values, setValues] = useState({
-    user: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-    file: ""
-  });
-
-
-
-  const inputs = [
-    {
-      id: 1,
-      name: "username",
-      type: "text",
-      placeholder: "Username",
-      label: "Username",
-      errorMessage:
-        "Username should be 3-16 + characters and shouldn't include any special character!",
-      pattern: "^[A-Za-z0-9]{3,16}$",
-      required: true,
-
-    },
-    {
-      id: 2,
-      name: "email",
-      type: "email",
-      placeholder: "Email",
-      label: "Email",
-      errorMessage: "It should be a valid email address!",
-      required: true,
-    },
-    {
-      id: 3,
-      name: "phone",
-      type: "text",
-      placeholder: "Phone",
-      label: "Phone",
-      errorMessage: "It should be a valid phone",
-      required: true,
-    },
-    {
-      id: 4,
-      name: "password",
-      type: "password",
-      placeholder: "Password",
-      label: "Password",
-      errorMessage:
-        "Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character!",
-      pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
-      required: true,
-
-    },
-    {
-      id: 5,
-      name: "confirm_password",
-      type: "password",
-      placeholder: "Confirm Password",
-      label: "Confirm Password",
-      errorMessage: "Passwords don't match!",
-      pattern: values.password,
-      required: true,
-    },
-  ]
-
-  const submit = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    console.log(Object.fromEntries(data.entries()))
-  }
-
-  const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value })
-  }
-  return (
-    <>
-      <div className={d1}>
-        <div className={navStrip} />
-        <div className='flex justify-center items-center h-[70%]'>
-          <section className='rounded-lg bg-black/70 flex flex-col'>
-            <form onSubmit={submit} className='text-white'>
-              <h1 className='text-center'>Register</h1>
-              {inputs.map((items) => (
-                <>
-                  <Forminput
-                    key={items.id}
-                    
-                    {...items}
-                    value={values[items.name]}
-                    onChange={onChange}
-                  />
-                </>
-              ))}
-              <div className='flex justify-center p-3'>
-                <button className={btn}>Sumbit</button>
-              </div>
-            </form>
-
-          </section>
-        </div>
-      </div>
-    </>
   )
+
+
 }
 
 export default Signup
