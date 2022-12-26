@@ -19,8 +19,6 @@ const Login = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  console.log(location);
-  console.log(location.pathname)
 
   const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(false);
@@ -30,9 +28,7 @@ const Login = () => {
   const [validPassword, setValidPassword] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
   const [errmsg, setErrmsg] = useState('');
-  const [success, setSuccess] = useState(false);
-  // const [emailFocus, setEmailFocus] = useState(false);
-
+  
 
   useEffect(() => {
     userRef.current.focus()
@@ -60,9 +56,9 @@ const Login = () => {
       const response = await axios.post(LOGIN_URL, data);
       const accessToken = response?.data?.token;
 
-      setAuth({ email, password, accessToken })
+      setAuth({ email, accessToken })
       navigate(from, { replace: true });
-      console.log(from)
+
       //  setAuth({ email, password, roles, accessToken });
       // const roles = response?.data?.roles;
       // setUser('');

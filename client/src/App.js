@@ -11,7 +11,7 @@ import UploadD from "./components/uploadD";
 import Editlist from "./components/editlist";
 import Protected from "./components/protected";
 import RequireAuth from "./components/requireAuth";
-
+import EditDoc from "./components/editDoc";
 function App() {
   const routes = useRoutes([
     {
@@ -45,11 +45,8 @@ function App() {
                   index: true,
                   element: <UploadD />
                 }, {
-                  path: "viewdoc",
-                  element: <ViewDoc />
-                }, {
                   path: "editdoc",
-                  element: <UploadD />
+                  element: <EditDoc />
                 },
               ]
             },

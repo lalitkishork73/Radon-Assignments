@@ -1,6 +1,6 @@
 import React, { useState, useReducer, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import Forminput from '../components/forminput';
+
 import { useNavigate } from 'react-router-dom';
 
 import { FcCheckmark } from 'react-icons/fc'

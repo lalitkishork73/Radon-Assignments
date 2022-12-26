@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 
 
+
 const Navbar = () => {
     return (
         <>

@@ -60,13 +60,13 @@ const createDocument = async (req, res) => {
 const getDocumentAll = async (req, res) => {
     try {
 
-        const document = await document.find({ isDeleted: false });
+        const documents = await document.find({ isDeleted: false });
 
-        if (!document) {
+        if (!documents) {
             return res.status(404).send({ status: false, message: 'no single document found' });
         }
 
-        return res.status(200).send({ status: true, message: 'bingo all data found', data: document });
+        return res.status(200).send({ status: true, message: 'bingo all data found', data: documents });
 
 
     }
