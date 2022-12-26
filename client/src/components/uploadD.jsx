@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../api/axios';
-
+import useAuth from '../hooks/auth';
 
 
 const UploadD = () => {
+    const { auth } = useAuth();
     const [file, setFile] = useState();
     const formdata = new FormData();
     const [respo, setRespo] = useState(false);
-    const URL = "/uploadfile"
+    
+    const URL = `/uploadfile`
 
     formdata.append('file', file);
 

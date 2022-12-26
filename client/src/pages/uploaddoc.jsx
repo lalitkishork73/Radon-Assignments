@@ -9,7 +9,7 @@ import AuthConsumer from '../hooks/auth'
 const Uploaddoc = () => {
     const [upload, setUpload] = useState(false);
     const auth = AuthConsumer();
-    console.log(auth);
+    console.log(auth.email);
 
 
     return (

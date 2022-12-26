@@ -3,18 +3,36 @@ const document = require('../models/document');
 const profile = require('../models/profile');
 const { uploadfile } = require('../helpers/awsConnect');
 const { uploadFiles } = require('../helpers/googleDrivestor');
-const { isValidObjectId } = require('../helpers/utils');
+const { isValidObjectId, isvalidEmail, isValid } = require('../helpers/utils');
 
 const createDocument = async (req, res) => {
     try {
-        // let files=req.files;
 
         let files = req.files;
-        
         let createDocument = {
             filename: files[0].originalname,
             filetype: files[0].mimetype
         };
+
+        const email = req.params.Id;
+
+        if (!isValid(email))
+            return res
+                .status(400)
+                .send({ status: false, message: "Email-ID is required" });
+
+        if (email) {
+            const checkEmail = await profile.findOne({ email: email });
+
+            if (!checkEmail) {
+                return res.status(404).json({
+                    status: false, message: "Try again"
+                })
+            }
+
+            createDocument["user"] = checkEmail._id;
+
+        }
 
 
         //using AWS S3 bucket
@@ -79,11 +97,22 @@ const getDocumentId = async (req, res) => {
     try {
         const docId = req.params.Id;
 
-        if (!isValidObjectId(docId)) {
-            return res.status(400).send({ status: false, message: 'Please provide valid Id' });
+        /*  if (!isValidObjectId(docId)) {
+             return res.status(400).send({ status: false, message: 'Please provide valid Id' });
+         } */
+
+        if (!isValid(docId))
+            return res
+                .status(400)
+                .send({ status: false, message: "please Prvide valid Params" });
+
+        const user = await profile.findone({ email: docId });
+
+        if (!user) {
+            return res.status(404).send({ status: false, message: "Id does not exist" })
         }
 
-        const findoc = await document.findOne({ id_: docId, isDeleted: false });
+        const findoc = await document.findOne({ user: user._id, isDeleted: false });
         if (!findoc) {
             return res.status(404).send({ status: false, message: "document not found for getdata" })
         }
@@ -105,11 +134,17 @@ const deleteDocument = async (req, res) => {
 
         const docId = req.params.Id;
 
-        if (!isValidObjectId(docId)) {
-            return res.status(400).send({ status: false, message: 'Please provide valid Id' });
-        }
+        if (!isValid(docId))
+            return res
+                .status(400)
+                .send({ status: false, message: "please Prvide valid Params" });
 
-        const deleteDocument = await document.findOneAndUpdate({ id_: docId, isDeleted: false }, { isDeleted: true, deletedAt: new Date() }, { new: true });
+        const user = await profile.findone({ email: docId });
+
+        if (!user) {
+            return res.status(404).send({ status: false, message: "Id does not exist" })
+        }
+        const deleteDocument = await document.findOneAndUpdate({ user: user._id, isDeleted: false }, { isDeleted: true, deletedAt: new Date() }, { new: true });
 
         if (!deleteDocument)
             return res

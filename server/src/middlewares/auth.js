@@ -44,14 +44,18 @@ const authorization = async (req, res, next) => {
         const tokenId = req.userId;
         const userId = req.params.Id || req.query.Id;
 
-        if (!isValidObjectId(userId)) {
-            return res.status(400).send({ status: false, message: `invalid userIID ${userId} ` });
+        if (!isValid(userId))
+            return res
+                .status(400)
+                .send({ status: false, message: "please Prvide valid Params" });
+
+        const user = await profile.findone({ email: userId });
+
+        if (!user) {
+            return res.status(404).send({ status: false, message: "Id does not exist" })
         }
-        const checkUser = await profile.findOne({ _id: userId });
-        if (!checkUser) {
-            return res.status(404).send({ status: false, message: "user not found" })
-        }
-        const UserId = checkUser._id.toString();
+
+        const UserId = user._id.toString();
 
         if (tokenId === UserId) {
             next();
