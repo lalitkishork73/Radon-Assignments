@@ -56,12 +56,8 @@ const authorization = async (req, res, next) => {
         if (!user) {
             return res.status(404).send({ status: false, message: "Id does not exist" })
         }
-        console.log(user.user.toString());
-
+    
         const User = user.user.toString();
-
-        console.log(User == tokenId);
-
         if (User == tokenId) {
             next();
         }
