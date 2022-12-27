@@ -133,7 +133,7 @@ const deleteDocument = async (req, res) => {
     try {
 
         const docId = req.params.Id;
-
+        console.log(docId);
 
         if (!isValidObjectId(docId)) {
             return res

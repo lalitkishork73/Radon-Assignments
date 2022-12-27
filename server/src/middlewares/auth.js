@@ -60,12 +60,14 @@ const authorization = async (req, res, next) => {
 
         const User = user.user.toString();
 
-        console.log(User==tokenId);
+        console.log(User == tokenId);
 
-        if (User==tokenId){
+        if (User == tokenId) {
             next();
         }
-        return res.status(403).send({ status: false, message: `this User ${userId} is unauthrised` })
+        else {
+            return res.status(403).send({ status: false, message: `this User ${userId} is unauthrised` })
+        }
 
     }
     catch (err) {
