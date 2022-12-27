@@ -1,12 +1,14 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 const profile = require('../models/profile');
-const { isValidObjectId } = require('../helpers/utils')
+const document = require('../models/document');
+const { isValidObjectId, isValid } = require('../helpers/utils')
 
 
 const authentication = (req, res, next) => {
     try {
-        let tokenBearer = req.headers['authorization'];
+        let tokenBearer = req.headers['Authorization'] || req.headers['authorization'];
+        console.log(tokenBearer);
         if (!tokenBearer) {
             return res
                 .status(400)
@@ -29,7 +31,7 @@ const authentication = (req, res, next) => {
             else {
                 decodedToken = decode;
                 let LoginUserId = decodedToken.userId;
-                req["userId"] = LoginUserId;
+                req["userId"] = LoginUserId.toString();
                 next();
             }
         });
@@ -49,15 +51,18 @@ const authorization = async (req, res, next) => {
                 .status(400)
                 .send({ status: false, message: "please Prvide valid Params" });
 
-        const user = await profile.findone({ email: userId });
+        const user = await document.findOne({ _id: userId });
 
         if (!user) {
             return res.status(404).send({ status: false, message: "Id does not exist" })
         }
+        console.log(user.user.toString());
 
-        const UserId = user._id.toString();
+        const User = user.user.toString();
 
-        if (tokenId === UserId) {
+        console.log(User==tokenId);
+
+        if (User==tokenId){
             next();
         }
         return res.status(403).send({ status: false, message: `this User ${userId} is unauthrised` })

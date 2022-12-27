@@ -11,6 +11,6 @@ router.post('/login', loginUser);
 router.post('/uploadfile/:Id', authentication, createDocument);
 router.get('/files', getDocumentAll);
 router.get('/files/:Id', authentication, getDocumentId);
-router.delete('/uploadfile/:Id', authentication, authorization, deleteDocument);
+router.delete('/files/:Id', authentication, authorization, deleteDocument);
 
 module.exports = router;

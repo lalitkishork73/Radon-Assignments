@@ -166,7 +166,6 @@ const loginUser = async function (req, res) {
                     Project: "it is assingment"
                 }, process.env.SECRET_KEY, { expiresIn: "10m" });
 
-                res.setHeader("Authorization", "Bearer " + token);
 
                 return res.status(201).send({ status: true, message: "successfully login", token: token });
             }

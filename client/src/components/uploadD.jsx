@@ -8,8 +8,12 @@ const UploadD = () => {
     const [file, setFile] = useState();
     const formdata = new FormData();
     const [respo, setRespo] = useState(false);
-    
-    const URL = `/uploadfile`
+    const id = auth?.email;
+    const token = auth?.accessToken;
+    console.log(auth);
+    console.log(token)
+    console.log(id);
+    const URL = `/uploadfile/${id}`
 
     formdata.append('file', file);
 
@@ -20,7 +24,7 @@ const UploadD = () => {
     const uploadData = async () => {
         try {
 
-            const res = await axios.post(URL, formdata)
+            const res = await axios.post(URL, formdata, { headers: { Authorization: `Bearer ${token}` } })
             if (res?.status === 201) {
                 setRespo(true);
             }
