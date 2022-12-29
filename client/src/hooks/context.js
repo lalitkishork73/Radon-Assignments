@@ -1,4 +1,5 @@
-import { useContext, createContext, useReducer } from "react";
+import { useContext, createContext, useReducer, useState } from "react";
+import { AiOutlineGooglePlus } from "react-icons/ai";
 import reducer from "./reducer";
 
 const intialState = {
@@ -17,3 +18,22 @@ export function AppProvider({ children }) {
 export default function useGlobelContext() {
     return useContext(AppContext);
 }
+
+
+let data={
+    Name:"tony stark",
+    age:"25",
+    address:{
+        city:"city",
+        state:"CA",
+        pincode:"12345"
+    },
+    biling:{
+        city:"los angeles",
+        state:"CA",
+        pincode:"12345"
+    },
+}
+
+const [name,setName]=useState('');
+const [city,setCity]=useState('');
