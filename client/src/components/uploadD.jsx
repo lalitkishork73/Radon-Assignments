@@ -10,9 +10,7 @@ const UploadD = () => {
     const [respo, setRespo] = useState(false);
     const id = auth?.email;
     const token = auth?.accessToken;
-    console.log(auth);
-    console.log(token)
-    console.log(id);
+
     const URL = `/uploadfile/${id}`
 
     formdata.append('file', file);

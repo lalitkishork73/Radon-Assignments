@@ -8,12 +8,9 @@ const EditDoc = () => {
     const token = auth?.accessToken;
     const URL = `/files/${id}`
     const [dataList, setData] = useState([]);
-
-    console.log(URL)
     const getData = async () => {
         try {
             const res = await axios.get(URL, { headers: { Authorization: `Bearer ${token}` } })
-            console.log(res.data.data)
             setData(res.data.data);
         }
         catch (err) {
@@ -21,23 +18,12 @@ const EditDoc = () => {
         }
     }
 
-  
-
-
-    useEffect(() => {
-        
-        console.log(dataList)
-
-
-    }, [dataList, setData])
-
     const dataDelete = async (data) => {
         try {
             const DEL_URL = `/files/${data}`
 
             await axios.delete(DEL_URL, { headers: { Authorization: `Bearer ${token}` } });
             const res = await axios.get(URL, { headers: { Authorization: `Bearer ${token}` } })
-            console.log(res.data.data)
             setData(res.data.data);
         }
         catch (err) {
@@ -63,19 +49,24 @@ const EditDoc = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {dataList.map((items) => (<>
-                            <tr key={items._id.toString()} className='bg-sky-50 text-sky-700'>
-                                <td className=''>{items.filename}</td>
-                                <td><a href={items.file}>View</a></td>
-                                <td><a href={items.file} download="true" className='text-green-500'>Download</a></td>
+                        {dataList.length > 0 ?
 
-                                <td><button onClick={async (e) => {
-                                    e.preventDefault();
-                                    await dataDelete(items._id);
+                            dataList.map((items) => (<>
+                                <tr key={items._id.toString()} className='bg-sky-50 text-sky-700'>
+                                    <td className=''>{items.filename}</td>
+                                    <td><a href={items.file}>View</a></td>
+                                    <td><a href={items.file} download="true" className='text-green-500'>Download</a></td>
 
-                                }} className='hover:bg-red-500 rounded-xl p-2 bg-cyan-500 text-white'>Delete</button></td>
-                            </tr>
-                        </>))}
+                                    <td><button onClick={async (e) => {
+                                        e.preventDefault();
+                                        await dataDelete(items._id);
+
+                                    }} className='hover:bg-red-500 rounded-xl p-2 bg-cyan-500 text-white'>Delete</button></td>
+                                </tr>
+                            </>))
+                            : <>
+                                <h1>You havn't any data!</h1>
+                            </>}
 
                     </tbody>
                 </table>

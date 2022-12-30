@@ -14,7 +14,6 @@ const ViewDoc = () => {
 
             let res = await axios.get(url);
             setDataList(res.data.data)
-            console.log(dataList)
 
 
         } catch (err) {

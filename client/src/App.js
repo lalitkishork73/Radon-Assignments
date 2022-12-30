@@ -8,8 +8,6 @@ import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Uploaddoc from "./pages/uploaddoc";
 import UploadD from "./components/uploadD";
-import Editlist from "./components/editlist";
-import Protected from "./components/protected";
 import RequireAuth from "./components/requireAuth";
 import EditDoc from "./components/editDoc";
 function App() {

@@ -28,7 +28,7 @@ const Login = () => {
   const [validPassword, setValidPassword] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
   const [errmsg, setErrmsg] = useState('');
-  
+
 
   useEffect(() => {
     userRef.current.focus()
@@ -83,8 +83,6 @@ const Login = () => {
   const login = (e) => {
     e.preventDefault();
     setData();
-
-    console.log(data);
   }
 
 
