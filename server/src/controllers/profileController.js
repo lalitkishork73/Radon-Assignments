@@ -148,8 +148,6 @@ const loginUser = async function (req, res) {
             return res.status(404).send({ status: false, message: "User not found" })
         }
 
-        console.log(user.email);
-        console.log(user.password);
         if (!isValid(password))
             return res
                 .status(400)

@@ -8,7 +8,6 @@ const { isValidObjectId, isValid } = require('../helpers/utils')
 const authentication = (req, res, next) => {
     try {
         let tokenBearer = req.headers['Authorization'] || req.headers['authorization'];
-        console.log(tokenBearer);
         if (!tokenBearer) {
             return res
                 .status(400)
