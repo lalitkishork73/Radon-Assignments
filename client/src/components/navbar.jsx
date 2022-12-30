@@ -1,11 +1,15 @@
 import React from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
+import useAuth from '../hooks/auth'
+
 
 
 
 
 
 const Navbar = () => {
+
+    const { auth, setAuth } = useAuth();
     return (
         <>
             <nav className=" absolute z-10 text-white flex gap-2 justify-between w-[100%] p-2">
@@ -15,8 +19,11 @@ const Navbar = () => {
                 <ul className='flex gap-5 mr-5'>
                     <NavLink to='/'><li className='hover:text-cyan-300 cursor-pointer p-1 font-bold'>Home</li></NavLink>
                     <NavLink to='/editdocument'><li className='hover:text-cyan-300 cursor-pointer p-1 font-bold'>Upload Documents</li></NavLink>
-                    <NavLink to='/login'><li className='hover:text-cyan-300 cursor-pointer border-2 p-1 pl-4 pr-4 hover:border-cyan-300 font-bold'>Login</li></NavLink>
-                    <NavLink to='/signup'><li className='hover:text-cyan-300 cursor-pointer border-2 p-1 pl-4 pr-4 hover:border-cyan-300 font-bold'>signup</li></NavLink>
+                    {!auth.email ? <>
+                        <NavLink to='/login'><li className='hover:text-cyan-300 cursor-pointer border-2 p-1 pl-4 pr-4 hover:border-cyan-300 font-bold'>Login</li></NavLink>
+                        <NavLink to='/signup'><li className='hover:text-cyan-300 cursor-pointer border-2 p-1 pl-4 pr-4 hover:border-cyan-300 font-bold'>Signup</li></NavLink> </> : <><NavLink to='/'><li className='hover:text-cyan-300 cursor-pointer border-2 p-1 pl-4 pr-4 hover:border-cyan-300 font-bold' onClick={() => {
+                            setAuth('');
+                        }}>LogOut</li></NavLink></>}
                 </ul>
             </nav>
 

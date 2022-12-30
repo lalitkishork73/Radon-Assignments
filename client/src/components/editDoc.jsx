@@ -21,23 +21,24 @@ const EditDoc = () => {
         }
     }
 
-    const [DocDel, setDocDel] = useState();
+  
 
 
-    const DEL_URL = `/files/${DocDel}`
     useEffect(() => {
-        console.log(DocDel)
+        
         console.log(dataList)
 
 
-    }, [DocDel,dataList,setData])
+    }, [dataList, setData])
 
-    const dataDelete = async () => {
+    const dataDelete = async (data) => {
         try {
+            const DEL_URL = `/files/${data}`
 
-            const res = await axios.delete(DEL_URL, { headers: { Authorization: `Bearer ${token}` } })
+            await axios.delete(DEL_URL, { headers: { Authorization: `Bearer ${token}` } });
+            const res = await axios.get(URL, { headers: { Authorization: `Bearer ${token}` } })
             console.log(res.data.data)
-            
+            setData(res.data.data);
         }
         catch (err) {
             console.log(err);
@@ -67,10 +68,10 @@ const EditDoc = () => {
                                 <td className=''>{items.filename}</td>
                                 <td><a href={items.file}>View</a></td>
                                 <td><a href={items.file} download="true" className='text-green-500'>Download</a></td>
+
                                 <td><button onClick={async (e) => {
-                                    
-                                    setDocDel(await items._id)
-                                    await dataDelete();
+                                    e.preventDefault();
+                                    await dataDelete(items._id);
 
                                 }} className='hover:bg-red-500 rounded-xl p-2 bg-cyan-500 text-white'>Delete</button></td>
                             </tr>
