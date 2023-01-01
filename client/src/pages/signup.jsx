@@ -4,7 +4,7 @@ import { FcCheckmark } from 'react-icons/fc'
 import { AiFillInfoCircle } from 'react-icons/ai'
 import axios from '../api/axios';
 const REGISTER_URL = `/signup`;
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const USER_REGEX = /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{3,23}$/g;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
 const PHONE_REGEX = /^(?:(?:\+|0{0,2})91(\s*|[\-])?|[0]?)?([6789]\d{2}([-]?)\d{3}([-]?)\d{4})$/;
@@ -14,9 +14,6 @@ const inputT = `text-red-500 text-sm p-1 bg-black rounded-xl `
 const inputF = `absolute left-[-9999px]`
 const d1 = `h-screen w-screen bg-[url(https://img.freepik.com/free-vector/gradient-abstract-background-design_23-2149066048.jpg?w=1380&t=st=1670789245~exp=1670789845~hmac=bc8f950b9599458127c92d1292fc5b9b1500428c917255b2552939426d950d11)] bg-cover`;
 const navStrip = `bg-black h-12`;
-
-
-
 
 const Signup = () => {
   //definde userRef and errRef
@@ -51,8 +48,9 @@ const Signup = () => {
   const [success, setSuccess] = useState(false);
 
   const [file, setFile] = useState();
+  const [isvalidFile, setIsvalidFile] = useState(false);
 
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState(false);
 
 
   const [preview, setPreview] = useState(null);
@@ -77,7 +75,7 @@ const Signup = () => {
   }, [phone])
 
   useEffect(() => {
-    setValidEmail(EMAIL_REGEX.test(phone));
+    setValidEmail(EMAIL_REGEX.test(email));
   }, [email])
 
   useEffect(() => {
@@ -86,19 +84,17 @@ const Signup = () => {
 
   const setData = async (formData) => {
     try {
+      setPost(true);
 
       let res = await axios.post(REGISTER_URL, formData);
 
-
-      setPost(res);
-
-
-      if (res.data === undefined) {
-        console.log('res Data error');
+      if (res?.data === undefined) {
+        console.log('server error');
       }
 
-      if (res.data.status === true) {
+      if (res?.data?.status === true) {
         setSuccess(true);
+        setPost(false);
         setUser('');
         setPassword('');
         setPhone('');
@@ -128,11 +124,14 @@ const Signup = () => {
 
     const v1 = USER_REGEX.test(user);
     const v2 = PWD_REGEX.test(password);
+    console.log(v1, v2, v1 || v2)
     if (!v1 || !v2) {
-      setErrMsg('Invalid Entry');
+      setErrMsg('Invalid Entry!');
+      console.log("hi")
       return;
     }
 
+    console.log("hi2")
     const formData = new FormData();
 
     formData.append('name', user);
@@ -141,6 +140,7 @@ const Signup = () => {
     formData.append('password', password);
     formData.append('photo', file);
     setData(formData);
+
 
   }
 
@@ -240,14 +240,24 @@ const Signup = () => {
 
                   <input type="file" name="file" className='text-white block w-full text-sm rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-cyan-400' onChange={imgprev} />
                 </form>
-                <div className='p-5 '>
-                  <img src={preview} width="250" height="250" alt='Set Profile Image' className='text-center text-white rounded-full bg-cover' />
+                <div className='p-5 text-white'>
+                  <div className='relative flex justify-center items-center h-[100%]'>
+                    <h1 className={preview ? "invisible" : ""}>Set Profile Image'</h1>
+                    <img src={preview} width="250" height="250" className='absolute text-center text-white rounded-full bg-cover' />
+                  </div>
                 </div>
               </div>
               <div className='flex justify-center p-3'>
                 <button className='p-1 pl-5 pr-5 bg-red-500 rounded-md text-white hover:bg-green-400' onClick={signup}
                 >SignUp</button>
               </div>
+
+              {
+                !post ? <><p className='text-red-400 text-center'>{errMsg}</p></> : <div className="flex flex-col justify-center items-center">
+                  <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 border-cyan-400 border-b-white rounded-full" role="status">
+                  </div></div>
+              }
+
               <p className='text-white text-center p-5'>If you have already an account?<Link to='/login'>&nbsp;<span className='text-cyan-400'>Login</span></Link></p>
             </section>
           }

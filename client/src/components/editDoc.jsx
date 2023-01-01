@@ -51,8 +51,8 @@ const EditDoc = () => {
                     <tbody>
                         {dataList.length > 0 ?
 
-                            dataList.map((items) => (<>
-                                <tr key={items._id.toString()} className='bg-sky-50 text-sky-700'>
+                            dataList.map((items,i) => (<>
+                                <tr key={i} className='bg-sky-50 text-sky-700'>
                                     <td className=''>{items.filename}</td>
                                     <td><a href={items.file}>View</a></td>
                                     <td><a href={items.file} download="true" className='text-green-500'>Download</a></td>
@@ -65,7 +65,7 @@ const EditDoc = () => {
                                 </tr>
                             </>))
                             : <>
-                                <h1>You havn't any data!</h1>
+                                <p>You havn't any data!</p>
                             </>}
 
                     </tbody>

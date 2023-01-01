@@ -13,6 +13,8 @@ import EditDoc from "./components/editDoc";
 function App() {
   const routes = useRoutes([
     {
+      path: "*",
+      element: <><h1>404 Not Found</h1></>,
       path: "/",
       element: <Navabar />,
       children: [
@@ -52,7 +54,7 @@ function App() {
         },
 
 
-      ]
+      ],
     },
   ]);
 

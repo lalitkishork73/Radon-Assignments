@@ -8,8 +8,10 @@ const UploadD = () => {
     const [file, setFile] = useState();
     const formdata = new FormData();
     const [respo, setRespo] = useState(false);
+    const [post, setPost] = useState(false);
     const id = auth?.email;
     const token = auth?.accessToken;
+    const [errMsg, setErrMsg] = useState('');
 
     const URL = `/uploadfile/${id}`
 
@@ -21,9 +23,12 @@ const UploadD = () => {
 
     const uploadData = async () => {
         try {
-
             const res = await axios.post(URL, formdata, { headers: { Authorization: `Bearer ${token}` } })
+            if(res?.status===500){
+                setErrMsg('Invalid Entry!');
+            }
             if (res?.status === 201) {
+                setPost(false);
                 setRespo(true);
             }
 
@@ -35,8 +40,10 @@ const UploadD = () => {
 
     const uploadfile = (e) => {
         e.preventDefault();
+        setPost(true);
         uploadData();
         setFile();
+        setRespo(false);
     }
     return (
         <>
@@ -56,6 +63,11 @@ const UploadD = () => {
                         </label>
                     </div>
                     <button onClick={uploadfile} className='text-white bg-cyan-400 p-2 rounded-md mt-5 hover:bg-cyan-500'>Upload</button>
+                    {
+                        post ? <> <div className="flex flex-col justify-center items-center">
+                            <div className="spinner-border animate-spin inline-block w-8 h-8 mt-2 border-4 border-cyan-400 border-b-white rounded-full" role="status">
+                            </div></div> </> : <><p className='text-red-400 text-center'>{errMsg}</p></>
+                    }
                     <p className={respo ? "text-green-500 text-center" : "invisible"} > SuccessFully added!</p>
                 </div>
             </div>
