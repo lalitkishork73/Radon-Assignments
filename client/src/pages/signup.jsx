@@ -127,11 +127,9 @@ const Signup = () => {
     console.log(v1, v2, v1 || v2)
     if (!v1 || !v2) {
       setErrMsg('Invalid Entry!');
-      console.log("hi")
       return;
     }
 
-    console.log("hi2")
     const formData = new FormData();
 
     formData.append('name', user);

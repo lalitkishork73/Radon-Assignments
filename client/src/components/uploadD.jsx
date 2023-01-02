@@ -18,6 +18,7 @@ const UploadD = () => {
     formdata.append('file', file);
 
     const imgu = (e) => {
+        
         setFile(e.target.files[0])
     }
 

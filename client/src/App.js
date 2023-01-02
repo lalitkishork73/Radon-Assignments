@@ -10,6 +10,7 @@ import Uploaddoc from "./pages/uploaddoc";
 import UploadD from "./components/uploadD";
 import RequireAuth from "./components/requireAuth";
 import EditDoc from "./components/editDoc";
+import Views from "./components/views"
 function App() {
   const routes = useRoutes([
     {
